@@ -1,5 +1,6 @@
-package com.numble.banking.member;
+package com.numble.banking.account;
 
+import com.numble.banking.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

@@ -1,5 +1,7 @@
 package com.numble.banking.member;
 
+import com.numble.banking.friend.Friend;
+import com.numble.banking.account.Account;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
