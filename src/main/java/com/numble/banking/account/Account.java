@@ -43,9 +43,9 @@ public class Account {
 		this.money = money;
 	}
 
-	public static Account createAccount() {
+	public static Account createAccount(String accountNumber) {
 		return Account.builder()
-			.number(new AccountNumber().getAccountNumber())
+			.number(accountNumber)
 			.money(0L)
 			.build();
 	}

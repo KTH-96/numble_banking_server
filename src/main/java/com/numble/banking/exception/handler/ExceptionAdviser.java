@@ -1,6 +1,8 @@
 package com.numble.banking.exception.handler;
 
+import com.numble.banking.exception.ApplicationException;
 import com.numble.banking.exception.ErrorCode;
+import com.numble.banking.exception.dto.ErrorInfo;
 import com.numble.banking.exception.dto.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +12,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @RestControllerAdvice
 public class ExceptionAdviser {
+
+	@ExceptionHandler(ApplicationException.class)
+	private ResponseEntity<ErrorInfo> applicationExceptionHandler(ApplicationException e){
+		return ErrorInfo.toResponseEntity(e.getErrorCode());
+	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	private ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(

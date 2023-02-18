@@ -2,10 +2,9 @@ package com.numble.banking.exception.dto;
 
 import com.numble.banking.exception.ErrorCode;
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 
 @Getter
 public class ErrorInfo {
@@ -30,5 +29,10 @@ public class ErrorInfo {
 			.message(code.getMessage())
 			.createTime(LocalDateTime.now())
 			.build();
+	}
+
+	public static ResponseEntity<ErrorInfo> toResponseEntity(ErrorCode errorCode) {
+		return ResponseEntity.status(errorCode.getStatus())
+			.body(ErrorInfo.of(errorCode));
 	}
 }
