@@ -3,6 +3,7 @@ package com.numble.banking.member.controller;
 import com.numble.banking.member.dto.request.MemberSignUpRequest;
 import com.numble.banking.member.dto.response.MemberSignUpResponse;
 import com.numble.banking.member.service.MemberServiceImpl;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class MemberController {
 	private final MemberServiceImpl memberService;
 
 	@PostMapping("/signup")
-	public ResponseEntity<MemberSignUpResponse> signUp(@RequestBody MemberSignUpRequest signUpMember) {
+	public ResponseEntity<MemberSignUpResponse> signUp(@RequestBody @Valid MemberSignUpRequest signUpMember) {
 		MemberSignUpResponse response = memberService.signUp(signUpMember);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
