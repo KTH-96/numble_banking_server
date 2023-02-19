@@ -9,11 +9,13 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class MemberSignInResponse {
 
+	private final Long memberId;
 	private final String name;
 	private final String accountNumber;
 
 	public static MemberSignInResponse of(Member signInMember) {
-		return new MemberSignInResponse(signInMember.getName(),
+		return new MemberSignInResponse(signInMember.getId(),
+			signInMember.getName(),
 			signInMember.findBasicAccountNumber());
 	}
 }
