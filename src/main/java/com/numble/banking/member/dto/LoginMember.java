@@ -1,8 +1,7 @@
-package com.numble.banking.member.dto.request;
+package com.numble.banking.member.dto;
 
 
 import com.numble.banking.member.Member;
-import com.numble.banking.member.dto.response.MemberSignInResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;

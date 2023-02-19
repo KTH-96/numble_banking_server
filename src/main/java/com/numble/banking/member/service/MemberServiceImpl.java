@@ -7,11 +7,10 @@ import com.numble.banking.exception.MemberDuplicationException;
 import com.numble.banking.exception.NotFindMemberException;
 import com.numble.banking.exception.NotMatchPassword;
 import com.numble.banking.member.Member;
-import com.numble.banking.member.dto.request.LoginMember;
+import com.numble.banking.member.dto.LoginMember;
 import com.numble.banking.member.dto.request.MemberSignInRequest;
 import com.numble.banking.member.dto.request.MemberSignUpRequest;
 import com.numble.banking.member.dto.response.LogoutMemberResponse;
-import com.numble.banking.member.dto.response.MemberSignInResponse;
 import com.numble.banking.member.dto.response.MemberSignUpResponse;
 import com.numble.banking.member.repository.MemberRepository;
 import java.util.Optional;
@@ -29,18 +28,18 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public LogoutMemberResponse logout(LoginMember loginMember) {
-		Member member = memberRepository.findById(loginMember.getMemberId())
+		Member member = memberRepository.findById(loginMember.getId())
 			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
 		return LogoutMemberResponse.of(member);
 	}
 
 	@Override
-	public MemberSignInResponse singIn(MemberSignInRequest signInRequest) {
+	public LoginMember singIn(MemberSignInRequest signInRequest) {
 		Member signInMember = memberRepository.findByEmail(signInRequest.getEmail())
 			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
 
 		checkPassword(signInMember.getPassword(), signInRequest.getPassword());
-		return MemberSignInResponse.of(signInMember);
+		return LoginMember.of(signInMember);
 	}
 
 	private static void checkPassword(String memberPassword, String signInPassword) {
