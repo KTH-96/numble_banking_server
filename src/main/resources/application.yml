@@ -29,3 +29,8 @@ logging:
     root: info
     com.example.elevenstreet: debug
     org.hibernate.SQL: debug
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie

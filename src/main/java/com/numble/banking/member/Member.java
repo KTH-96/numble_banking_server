@@ -1,5 +1,7 @@
 package com.numble.banking.member;
 
+import static com.numble.banking.common.Constant.BASIC_ACCOUNT;
+
 import com.numble.banking.account.Account;
 import com.numble.banking.friend.Friend;
 import com.numble.banking.member.dto.request.MemberSignUpRequest;
@@ -58,4 +60,7 @@ public class Member {
 			.build();
 	}
 
+	public String findBasicAccountNumber() {
+		return getAccounts().get(BASIC_ACCOUNT).getNumber();
+	}
 }

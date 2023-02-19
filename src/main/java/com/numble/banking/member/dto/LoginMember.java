@@ -1,9 +1,9 @@
-package com.numble.banking.member.dto.request;
+package com.numble.banking.member.dto;
 
-import javax.validation.constraints.Email;
+
+import com.numble.banking.member.Member;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,17 +14,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class MemberSignUpRequest {
+public class LoginMember {
 
-	@NotBlank
-	@Email
-	private String email;
+	@NotNull
+	private Long id;
 
 	@NotBlank
 	private String name;
 
 	@NotBlank
-	@Size(min = 10, max = 15)
-	private String password;
+	private String accountNumber;
 
+	public static LoginMember of(Member signInMember) {
+		return new LoginMember(signInMember.getId(),
+			signInMember.getName(),
+			signInMember.findBasicAccountNumber());
+	}
 }

@@ -4,8 +4,13 @@ import com.numble.banking.account.Account;
 import com.numble.banking.account.service.AccountService;
 import com.numble.banking.exception.ErrorCode;
 import com.numble.banking.exception.MemberDuplicationException;
+import com.numble.banking.exception.NotFindMemberException;
+import com.numble.banking.exception.NotMatchPassword;
 import com.numble.banking.member.Member;
+import com.numble.banking.member.dto.LoginMember;
+import com.numble.banking.member.dto.request.MemberSignInRequest;
 import com.numble.banking.member.dto.request.MemberSignUpRequest;
+import com.numble.banking.member.dto.response.LogoutMemberResponse;
 import com.numble.banking.member.dto.response.MemberSignUpResponse;
 import com.numble.banking.member.repository.MemberRepository;
 import java.util.Optional;
@@ -14,11 +19,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
 	private final AccountService accountService;
+
+	@Override
+	public LogoutMemberResponse logout(LoginMember loginMember) {
+		Member member = memberRepository.findById(loginMember.getId())
+			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
+		return LogoutMemberResponse.of(member);
+	}
+
+	@Override
+	public LoginMember singIn(MemberSignInRequest signInRequest) {
+		Member signInMember = memberRepository.findByEmail(signInRequest.getEmail())
+			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
+
+		checkPassword(signInMember.getPassword(), signInRequest.getPassword());
+		return LoginMember.of(signInMember);
+	}
+
+	private static void checkPassword(String memberPassword, String signInPassword) {
+		if (!memberPassword.equals(signInPassword)) {
+			throw new NotMatchPassword(ErrorCode.NOT_MATCH_PASSWORD);
+		}
+	}
 
 	@Transactional
 	@Override
