@@ -12,7 +12,8 @@ public enum ErrorCode {
 	NOT_FIND_MEMBER("N001", HttpStatus.BAD_REQUEST, "가입한 회원이 아닙니다."),
 	NOT_MATCH_PASSWORD("N002", HttpStatus.BAD_REQUEST, "맞지않는 비밀번호 입니다."),
 	DUPLICATION_MEMBER_EMAIL("M001", HttpStatus.CONFLICT, "중복된 이메일입니다."),
-	LOGOUT_FAIL_EXCEPTION("M002", HttpStatus.BAD_REQUEST, "로그인 실패"),
+	LOGOUT_FAILED("M002", HttpStatus.BAD_REQUEST, "로그인 실패"),
+	NOT_LOGIN_STATUS("M003", HttpStatus.BAD_REQUEST, "로그인이 필요합니다."),
 	INVALID_INPUT_VALUE("R001", HttpStatus.BAD_REQUEST,"요청값이 올바르지 않습니다.");
 
 	private final String code;
