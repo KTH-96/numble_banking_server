@@ -7,25 +7,33 @@ import com.numble.banking.exception.MemberDuplicationException;
 import com.numble.banking.exception.NotFindMemberException;
 import com.numble.banking.exception.NotMatchPassword;
 import com.numble.banking.member.Member;
+import com.numble.banking.member.dto.request.LoginMember;
 import com.numble.banking.member.dto.request.MemberSignInRequest;
 import com.numble.banking.member.dto.request.MemberSignUpRequest;
+import com.numble.banking.member.dto.response.LogoutMemberResponse;
 import com.numble.banking.member.dto.response.MemberSignInResponse;
 import com.numble.banking.member.dto.response.MemberSignUpResponse;
 import com.numble.banking.member.repository.MemberRepository;
 import java.util.Optional;
-import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
 	private final AccountService accountService;
 
-	@Transactional
+	@Override
+	public LogoutMemberResponse logout(LoginMember loginMember) {
+		Member member = memberRepository.findById(loginMember.getMemberId())
+			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
+		return LogoutMemberResponse.of(member);
+	}
+
 	@Override
 	public MemberSignInResponse singIn(MemberSignInRequest signInRequest) {
 		Member signInMember = memberRepository.findByEmail(signInRequest.getEmail())
