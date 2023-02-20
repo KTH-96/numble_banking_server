@@ -11,7 +11,7 @@ public class LogoutMemberResponse {
 
 	private final String name;
 
-	public static LogoutMemberResponse of(Member member) {
+	public static LogoutMemberResponse from(Member member) {
 		return new LogoutMemberResponse(member.getName());
 	}
 }

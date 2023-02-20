@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
 	public LogoutMemberResponse logout(LoginMember loginMember) {
 		Member member = memberRepository.findById(loginMember.getId())
 			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
-		return LogoutMemberResponse.of(member);
+		return LogoutMemberResponse.from(member);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 			.orElseThrow(() -> new NotFindMemberException(ErrorCode.NOT_FIND_MEMBER));
 
 		checkPassword(signInMember.getPassword(), signInRequest.getPassword());
-		return LoginMember.of(signInMember);
+		return LoginMember.from(signInMember);
 	}
 
 	private static void checkPassword(String memberPassword, String signInPassword) {
