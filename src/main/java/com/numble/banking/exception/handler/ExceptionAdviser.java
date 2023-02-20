@@ -1,7 +1,6 @@
 package com.numble.banking.exception.handler;
 
 import com.numble.banking.exception.ApplicationException;
-import com.numble.banking.exception.ErrorCode;
 import com.numble.banking.exception.dto.ErrorInfo;
 import com.numble.banking.exception.dto.ErrorResponse;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class ExceptionAdviser {
 
 	@ExceptionHandler(ApplicationException.class)
-	private ResponseEntity<ErrorInfo> applicationExceptionHandler(ApplicationException e){
+	private ResponseEntity<ErrorInfo> applicationExceptionHandler(ApplicationException e) {
 		return ErrorInfo.toResponseEntity(e.getErrorCode());
 	}
 

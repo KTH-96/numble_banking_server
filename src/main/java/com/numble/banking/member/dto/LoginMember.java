@@ -25,7 +25,7 @@ public class LoginMember {
 	@NotBlank
 	private String accountNumber;
 
-	public static LoginMember of(Member signInMember) {
+	public static LoginMember from(Member signInMember) {
 		return new LoginMember(signInMember.getId(),
 			signInMember.getName(),
 			signInMember.findBasicAccountNumber());

@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)

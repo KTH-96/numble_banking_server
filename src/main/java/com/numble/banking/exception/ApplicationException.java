@@ -3,7 +3,7 @@ package com.numble.banking.exception;
 import lombok.Getter;
 
 @Getter
-public class ApplicationException extends RuntimeException{
+public class ApplicationException extends RuntimeException {
 
 	private final ErrorCode errorCode;
 
