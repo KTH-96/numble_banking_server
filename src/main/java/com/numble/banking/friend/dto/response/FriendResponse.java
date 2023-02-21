@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class FriendSingleResponse {
+public class FriendResponse {
 
 	private final Long id;
 	private final String accountNumber;
 	private final String name;
 
 
-	public static FriendSingleResponse from(Friend friend) {
-		return new FriendSingleResponse(friend.getId(), friend.getAccountNumber(), friend.getName());
+	public static FriendResponse from(Friend friend) {
+		return new FriendResponse(friend.getId(), friend.getAccountNumber(), friend.getName());
 	}
 }

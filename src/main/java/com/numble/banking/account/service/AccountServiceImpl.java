@@ -4,7 +4,7 @@ import static com.numble.banking.exception.ErrorCode.NOT_FIND_ACCOUNT;
 
 import com.numble.banking.account.Account;
 import com.numble.banking.account.AccountNumber;
-import com.numble.banking.account.dto.response.MyAccountResponse;
+import com.numble.banking.account.dto.response.AccountResponse;
 import com.numble.banking.account.repository.AccountRepository;
 import com.numble.banking.account.exception.NotFindAccountException;
 import com.numble.banking.member.dto.LoginMember;
@@ -23,12 +23,12 @@ public class AccountServiceImpl implements AccountService {
 	private final AccountRepository accountRepository;
 
 	@Override
-	public MyAccountResponse findMyAccounts(LoginMember loginMember, Pageable pageable) {
+	public Page<AccountResponse> findMyAccounts(LoginMember loginMember, Pageable pageable) {
 		Page<Account> accounts = accountRepository.findAccountById(loginMember.getId(), pageable);
 		if (accounts.isEmpty()) {
 			throw new NotFindAccountException(NOT_FIND_ACCOUNT);
 		}
-		return MyAccountResponse.from(accounts);
+		return accounts.map(AccountResponse::from);
 	}
 
 	@Transactional
