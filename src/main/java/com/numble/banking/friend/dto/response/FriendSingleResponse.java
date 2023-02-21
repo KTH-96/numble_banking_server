@@ -1,5 +1,6 @@
 package com.numble.banking.friend.dto.response;
 
+import com.numble.banking.friend.Friend;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,4 +14,7 @@ public class FriendSingleResponse {
 	private final String name;
 
 
+	public static FriendSingleResponse from(Friend friend) {
+		return new FriendSingleResponse(friend.getId(), friend.getAccountNumber(), friend.getName());
+	}
 }
