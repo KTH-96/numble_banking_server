@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class AccountSingleResponse {
+public class AccountResponse {
 
 	private final Long accountId;
 	private final String accountNumber;
 	private final Long currentMoney;
 
-	public static AccountSingleResponse from(Account account) {
-		return new AccountSingleResponse(account.getId(),
+	public static AccountResponse from(Account account) {
+		return new AccountResponse(account.getId(),
 			account.getNumber(),
 			account.getMoney()
 		);
