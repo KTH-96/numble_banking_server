@@ -1,4 +1,7 @@
-package com.numble.banking.exception;
+package com.numble.banking.member.exception;
+
+import com.numble.banking.exception.ApplicationException;
+import com.numble.banking.exception.ErrorCode;
 
 public class MemberDuplicationException extends ApplicationException {
 

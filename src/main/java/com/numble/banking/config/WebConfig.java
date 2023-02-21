@@ -1,6 +1,6 @@
 package com.numble.banking.config;
 
-import com.numble.banking.utils.LoginArgumentResolver;
+import com.numble.banking.common.utils.LoginArgumentResolver;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

@@ -6,7 +6,7 @@ import com.numble.banking.account.Account;
 import com.numble.banking.account.AccountNumber;
 import com.numble.banking.account.dto.response.MyAccountResponse;
 import com.numble.banking.account.repository.AccountRepository;
-import com.numble.banking.exception.NotFindAccountException;
+import com.numble.banking.account.exception.NotFindAccountException;
 import com.numble.banking.member.dto.LoginMember;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

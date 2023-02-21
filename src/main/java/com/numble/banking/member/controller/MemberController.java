@@ -3,14 +3,14 @@ package com.numble.banking.member.controller;
 import static com.numble.banking.common.Constant.LOGIN_MEMBER;
 import static com.numble.banking.exception.ErrorCode.LOGOUT_FAILED;
 
-import com.numble.banking.exception.LogoutFailException;
+import com.numble.banking.member.exception.LogoutFailException;
 import com.numble.banking.member.dto.LoginMember;
 import com.numble.banking.member.dto.request.MemberSignInRequest;
 import com.numble.banking.member.dto.request.MemberSignUpRequest;
 import com.numble.banking.member.dto.response.LogoutMemberResponse;
 import com.numble.banking.member.dto.response.MemberSignUpResponse;
 import com.numble.banking.member.service.MemberServiceImpl;
-import com.numble.banking.utils.Login;
+import com.numble.banking.common.utils.Login;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
