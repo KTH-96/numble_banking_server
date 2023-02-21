@@ -1,12 +1,20 @@
 package com.numble.banking.friend.service;
 
 import static com.numble.banking.exception.ErrorCode.NOT_FIND_FRIEND;
+import static com.numble.banking.exception.ErrorCode.NOT_FIND_MEMBER;
 
 import com.numble.banking.friend.Friend;
+import com.numble.banking.friend.dto.request.FriendListRequest;
 import com.numble.banking.friend.dto.response.FriendResponse;
+import com.numble.banking.friend.dto.response.FriendSaveResponse;
 import com.numble.banking.friend.exception.NotFindFriendException;
 import com.numble.banking.friend.repository.FriendRepository;
+import com.numble.banking.member.Member;
 import com.numble.banking.member.dto.LoginMember;
+import com.numble.banking.member.exception.NotFindMemberException;
+import com.numble.banking.member.repository.MemberRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +27,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class FriendServiceImpl implements FriendService{
 
 	private final FriendRepository friendRepository;
+	private final MemberRepository memberRepository;
+
+	@Transactional
+	@Override
+	public List<FriendSaveResponse> saveFriends(LoginMember loginMember, FriendListRequest friendsRequest) {
+		Member member = memberRepository.findById(loginMember.getId())
+			.orElseThrow(() -> new NotFindMemberException(NOT_FIND_MEMBER));
+
+		List<Friend> friends = Friend.save(friendsRequest.getFriendRequests(), member);
+		changesMember(member, friends);
+
+		friendRepository.saveAll(friends);
+		return friends.stream().map(FriendSaveResponse::from)
+			.collect(Collectors.toList());
+	}
+
+	private static void changesMember(Member member, List<Friend> friends) {
+		for (Friend friend : friends) {
+			friend.changeMember(member);
+		}
+	}
 
 	@Override
 	public Page<FriendResponse> findMyFriend(LoginMember loginMember, Pageable pageable) {

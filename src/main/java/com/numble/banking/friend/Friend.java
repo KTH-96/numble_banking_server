@@ -1,6 +1,9 @@
 package com.numble.banking.friend;
 
+import com.numble.banking.friend.dto.request.FriendRequest;
 import com.numble.banking.member.Member;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,4 +35,28 @@ public class Friend {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private Member member;
+
+	@Builder
+	public Friend(String accountNumber, String name, Member member) {
+		this.accountNumber = accountNumber;
+		this.name = name;
+		this.member = member;
+	}
+
+	public static List<Friend> save(List<FriendRequest> friendRequests, Member member) {
+		List<Friend> friends = new ArrayList<>();
+		for (FriendRequest friendRequest : friendRequests) {
+			friends.add(Friend.builder()
+				.name(friendRequest.getName())
+				.accountNumber(friendRequest.getAccountNumber())
+				.member(member)
+				.build());
+		}
+		return friends;
+	}
+
+	public void changeMember(Member member) {
+		this.member = member;
+		member.getFriends().add(this);
+	}
 }
