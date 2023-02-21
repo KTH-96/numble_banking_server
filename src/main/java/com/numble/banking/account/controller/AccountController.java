@@ -3,7 +3,7 @@ package com.numble.banking.account.controller;
 import com.numble.banking.account.dto.response.MyAccountResponse;
 import com.numble.banking.account.service.AccountService;
 import com.numble.banking.member.dto.LoginMember;
-import com.numble.banking.utils.Login;
+import com.numble.banking.common.utils.Login;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

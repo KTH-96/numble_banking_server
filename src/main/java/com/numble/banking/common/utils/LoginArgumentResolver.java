@@ -1,4 +1,4 @@
-package com.numble.banking.utils;
+package com.numble.banking.common.utils;
 
 import static com.numble.banking.common.Constant.LOGIN_MEMBER;
 import static com.numble.banking.exception.ErrorCode.NOT_LOGIN_STATUS;
