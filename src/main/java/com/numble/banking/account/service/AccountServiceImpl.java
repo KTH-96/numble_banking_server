@@ -11,10 +11,12 @@ import com.numble.banking.account.repository.AccountRepository;
 import com.numble.banking.account.exception.NotFindAccountException;
 import com.numble.banking.member.dto.LoginMember;
 import java.util.Optional;
+import javax.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
 
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Transactional
 	@Override
 	public AccountTransferResponse transferMoney(LoginMember loginMember, AccountTransferRequest request) {
