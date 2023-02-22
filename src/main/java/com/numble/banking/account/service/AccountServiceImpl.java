@@ -10,6 +10,7 @@ import com.numble.banking.account.dto.response.AccountTransferResponse;
 import com.numble.banking.account.repository.AccountRepository;
 import com.numble.banking.account.exception.NotFindAccountException;
 import com.numble.banking.member.dto.LoginMember;
+import com.numble.banking.mock.NumbleAlarmService;
 import java.util.Optional;
 import javax.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,8 @@ public class AccountServiceImpl implements AccountService {
 
 		myAccount.minusMoney(request.getTransferMoney());
 		friendAccount.plusMoney(request.getTransferMoney());
+
+		NumbleAlarmService.notify(myAccount.getMoney(), friendAccount.getNumber());
 
 		return AccountTransferResponse.from(myAccount.getMoney(), friendAccount.getNumber());
 	}
