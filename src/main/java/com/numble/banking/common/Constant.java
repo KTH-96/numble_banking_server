@@ -9,6 +9,7 @@ public interface Constant {
 	int ACCOUNT_NUMBER_SUFFIX = 1000000;
 
 	int BASIC_ACCOUNT = 0;
+	int ZERO = 0;
 	String ACCOUNT_NUMBER_PATTERN = "\\d{6}-\\d{2}-\\d{6}";
 	String DECIMAL_PATTERN = "0";
 	String HYPHEN = "-";
