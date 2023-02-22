@@ -15,15 +15,17 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/friend")
 @RequiredArgsConstructor
 public class FriendController {
 
 	private final FriendService friendService;
 
-	@GetMapping("/friend-list")
+	@GetMapping("/list")
 	public Page<FriendResponse> friendList(
 		@Login @Valid LoginMember loginMember,
 		@PageableDefault(size = 5) Pageable pageable
@@ -31,7 +33,7 @@ public class FriendController {
 		return friendService.findMyFriend(loginMember, pageable);
 	}
 
-	@PostMapping("/friend-add")
+	@PostMapping("/add")
 	public List<FriendSaveResponse> addFriend(
 		@Login @Valid LoginMember loginMember,
 		@RequestBody @Valid FriendListRequest friendsRequest

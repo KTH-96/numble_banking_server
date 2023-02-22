@@ -4,14 +4,20 @@ import static com.numble.banking.exception.ErrorCode.NOT_FIND_ACCOUNT;
 
 import com.numble.banking.account.Account;
 import com.numble.banking.account.AccountNumber;
+import com.numble.banking.account.dto.request.AccountTransferRequest;
 import com.numble.banking.account.dto.response.AccountResponse;
+import com.numble.banking.account.dto.response.AccountTransferResponse;
 import com.numble.banking.account.repository.AccountRepository;
 import com.numble.banking.account.exception.NotFindAccountException;
 import com.numble.banking.member.dto.LoginMember;
+import com.numble.banking.mock.NumbleAlarmService;
 import java.util.Optional;
+import javax.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +27,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
+
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Transactional
+	@Override
+	public AccountTransferResponse transferMoney(LoginMember loginMember, AccountTransferRequest request) {
+		Account myAccount = accountRepository.findByNumber(loginMember.getAccountNumber())
+			.orElseThrow(() -> new NotFindAccountException(NOT_FIND_ACCOUNT));
+
+		Account friendAccount = accountRepository.findByNumber(request.getFriendAccountNumber())
+			.orElseThrow(() -> new NotFindAccountException(NOT_FIND_ACCOUNT));
+
+		myAccount.minusMoney(request.getTransferMoney());
+		friendAccount.plusMoney(request.getTransferMoney());
+
+		NumbleAlarmService.notify(myAccount.getMoney(), friendAccount.getNumber());
+
+		return AccountTransferResponse.from(myAccount.getMoney(), friendAccount.getNumber());
+	}
 
 	@Override
 	public Page<AccountResponse> findMyAccounts(LoginMember loginMember, Pageable pageable) {

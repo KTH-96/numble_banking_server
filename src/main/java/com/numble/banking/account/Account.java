@@ -1,5 +1,11 @@
 package com.numble.banking.account;
 
+import static com.numble.banking.common.Constant.*;
+import static com.numble.banking.exception.ErrorCode.NOT_EMPTY_MONEY;
+import static com.numble.banking.exception.ErrorCode.TOO_MUCH_MONEY;
+
+import com.numble.banking.account.exception.NotEmptyMoneyException;
+import com.numble.banking.account.exception.TooMuchMoneyException;
 import com.numble.banking.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,4 +58,18 @@ public class Account {
 		member.getAccounts().add(this);
 	}
 
+	public void minusMoney(Long transferMoney) {
+		if (this.money < transferMoney || this.money == ZERO) {
+			throw new NotEmptyMoneyException(NOT_EMPTY_MONEY);
+		}
+		this.money -= transferMoney;
+	}
+
+	public void plusMoney(Long transferMoney) {
+		try {
+			this.money += transferMoney;
+		} catch (StackOverflowError error) {
+			throw new TooMuchMoneyException(TOO_MUCH_MONEY);
+		}
+	}
 }
