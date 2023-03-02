@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 ### Profiles ###
-application-test.yml
+application-*.yml
 
 ### STS ###
 .apt_generated

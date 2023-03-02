@@ -1,7 +1,6 @@
-package com.numble.banking.member.dto.request;
+package com.numble.banking.member.oauth;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class MemberSignInRequest {
+public class LoginOauthMember {
 
-	@NotBlank
-	@Email
-	private String email;
+	@NotNull
+	private Long id;
 
-	@NotBlank
-	private String password;
+	public static LoginOauthMember from(Long id) {
+		return new LoginOauthMember(id);
+	}
 }

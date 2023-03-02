@@ -9,9 +9,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class FriendSaveResponse {
 
+	private final Long id;
 	private final String name;
 
 	public static FriendSaveResponse from(Friend friend) {
-		return new FriendSaveResponse(friend.getName());
+		return new FriendSaveResponse(friend.getId(), friend.getName());
 	}
 }

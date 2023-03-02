@@ -1,4 +1,4 @@
-package com.numble.banking.member.exception;
+package com.numble.banking.member.member.exception;
 
 import com.numble.banking.exception.ApplicationException;
 import com.numble.banking.exception.ErrorCode;

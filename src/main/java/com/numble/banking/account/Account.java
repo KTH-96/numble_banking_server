@@ -1,6 +1,6 @@
 package com.numble.banking.account;
 
-import static com.numble.banking.common.Constant.*;
+import static com.numble.banking.common.Constant.ZERO;
 import static com.numble.banking.exception.ErrorCode.NOT_EMPTY_MONEY;
 import static com.numble.banking.exception.ErrorCode.TOO_MUCH_MONEY;
 

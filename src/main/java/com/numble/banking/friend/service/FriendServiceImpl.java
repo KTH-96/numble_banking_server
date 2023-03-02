@@ -10,9 +10,8 @@ import com.numble.banking.friend.dto.response.FriendSaveResponse;
 import com.numble.banking.friend.exception.NotFindFriendException;
 import com.numble.banking.friend.repository.FriendRepository;
 import com.numble.banking.member.Member;
-import com.numble.banking.member.dto.LoginMember;
-import com.numble.banking.member.exception.NotFindMemberException;
-import com.numble.banking.member.repository.MemberRepository;
+import com.numble.banking.member.member.exception.NotFindMemberException;
+import com.numble.banking.member.member.repository.MemberRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +30,8 @@ public class FriendServiceImpl implements FriendService{
 
 	@Transactional
 	@Override
-	public List<FriendSaveResponse> saveFriends(LoginMember loginMember, FriendListRequest friendsRequest) {
-		Member member = memberRepository.findById(loginMember.getId())
+	public List<FriendSaveResponse> saveFriends(Long loginMemberId, FriendListRequest friendsRequest) {
+		Member member = memberRepository.findById(loginMemberId)
 			.orElseThrow(() -> new NotFindMemberException(NOT_FIND_MEMBER));
 
 		List<Friend> friends = Friend.save(friendsRequest.getFriendRequests(), member);
@@ -50,8 +49,8 @@ public class FriendServiceImpl implements FriendService{
 	}
 
 	@Override
-	public Page<FriendResponse> findMyFriend(LoginMember loginMember, Pageable pageable) {
-		Page<Friend> friends = friendRepository.findFriendById(loginMember.getId(), pageable);
+	public Page<FriendResponse> findMyFriend(Long loginMemberId, Pageable pageable) {
+		Page<Friend> friends = friendRepository.findFriendById(loginMemberId, pageable);
 		if (friends.isEmpty()) {
 			throw new NotFindFriendException(NOT_FIND_FRIEND);
 		}

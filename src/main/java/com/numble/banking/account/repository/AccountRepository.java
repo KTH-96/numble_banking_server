@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-	Optional<Boolean> existsByNumber(String accountNumber);
+	boolean existsByNumber(String accountNumber);
 
 	@Query("select a from Account a join a.member where a.member.id = :member_id")
 	Page<Account> findAccountById(@Param("member_id") Long id, Pageable pageable);

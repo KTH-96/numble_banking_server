@@ -7,14 +7,12 @@ import com.numble.banking.account.AccountNumber;
 import com.numble.banking.account.dto.request.AccountTransferRequest;
 import com.numble.banking.account.dto.response.AccountResponse;
 import com.numble.banking.account.dto.response.AccountTransferResponse;
-import com.numble.banking.account.repository.AccountRepository;
 import com.numble.banking.account.exception.NotFindAccountException;
-import com.numble.banking.member.dto.LoginMember;
+import com.numble.banking.account.repository.AccountRepository;
+import com.numble.banking.member.member.service.MemberService;
 import com.numble.banking.mock.NumbleAlarmService;
-import java.util.Optional;
 import javax.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.BatchSize;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Lock;
@@ -28,11 +26,11 @@ public class AccountServiceImpl implements AccountService {
 
 	private final AccountRepository accountRepository;
 
+	@Override
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Transactional
-	@Override
-	public AccountTransferResponse transferMoney(LoginMember loginMember, AccountTransferRequest request) {
-		Account myAccount = accountRepository.findByNumber(loginMember.getAccountNumber())
+	public AccountTransferResponse transferMoney(Long loginMemberId, AccountTransferRequest request) {
+		Account myAccount = accountRepository.findByNumber(request.getMyAccountNumber())
 			.orElseThrow(() -> new NotFindAccountException(NOT_FIND_ACCOUNT));
 
 		Account friendAccount = accountRepository.findByNumber(request.getFriendAccountNumber())
@@ -43,12 +41,12 @@ public class AccountServiceImpl implements AccountService {
 
 		NumbleAlarmService.notify(myAccount.getMoney(), friendAccount.getNumber());
 
-		return AccountTransferResponse.from(myAccount.getMoney(), friendAccount.getNumber());
+		return AccountTransferResponse.from(loginMemberId, myAccount.getMoney(), friendAccount.getNumber());
 	}
 
 	@Override
-	public Page<AccountResponse> findMyAccounts(LoginMember loginMember, Pageable pageable) {
-		Page<Account> accounts = accountRepository.findAccountById(loginMember.getId(), pageable);
+	public Page<AccountResponse> findMyAccounts(Long loginMemberId, Pageable pageable) {
+		Page<Account> accounts = accountRepository.findAccountById(loginMemberId, pageable);
 		if (accounts.isEmpty()) {
 			throw new NotFindAccountException(NOT_FIND_ACCOUNT);
 		}
@@ -59,13 +57,13 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account createAccount() {
 		String accountNumber = AccountNumber.createAccountNumber();
-		Optional<Boolean> duplication = accountRepository.existsByNumber(accountNumber);
+		boolean duplication = accountRepository.existsByNumber(accountNumber);
 
 		return makeAccount(accountNumber, duplication);
 	}
 
-	private Account makeAccount(String accountNumber, Optional<Boolean> duplication) {
-		while (duplication.orElse(false)) {
+	private Account makeAccount(String accountNumber, boolean duplication) {
+		while (duplication) {
 			accountNumber = AccountNumber.createAccountNumber();
 			duplication = accountRepository.existsByNumber(accountNumber);
 		}

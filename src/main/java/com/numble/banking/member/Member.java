@@ -4,7 +4,6 @@ import static com.numble.banking.common.Constant.BASIC_ACCOUNT;
 
 import com.numble.banking.account.Account;
 import com.numble.banking.friend.Friend;
-import com.numble.banking.member.dto.request.MemberSignUpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -13,14 +12,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Table(indexes = @Index(columnList = "sns_id, email", name = "sns_id_email_index"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -29,14 +30,17 @@ public class Member {
 	@Column(name = "member_id")
 	private Long id;
 
-	@Column(name = "member_email", length = 20, unique = true)
-	private String email;
+	@Column(name = "sns_id")
+	private Long snsId;
 
-	@Column(name = "member_name", length = 10)
+	@Column(length = 10)
 	private String name;
 
-	@Column(name = "member_password", length = 15)
-	private String password;
+	@Column
+	private String profileImage;
+
+	@Column(length = 30, unique = true)
+	private String email;
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Account> accounts = new ArrayList<>();
@@ -44,20 +48,11 @@ public class Member {
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Friend> friends = new ArrayList<>();
 
-	@Builder
-	public Member(String email, String name, String password, Account accounts) {
-		this.email = email;
+	public Member(Long snsId, String name, String profileImage, String email) {
+		this.snsId = snsId;
 		this.name = name;
-		this.password = password;
-		this.accounts.add(accounts);
-	}
-
-	public static Member createMember(MemberSignUpRequest signUpMember) {
-		return Member.builder()
-			.name(signUpMember.getName())
-			.email(signUpMember.getEmail())
-			.password(signUpMember.getPassword())
-			.build();
+		this.profileImage = profileImage;
+		this.email = email;
 	}
 
 	public String findBasicAccountNumber() {

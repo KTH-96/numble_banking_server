@@ -16,18 +16,13 @@ spring:
         default_batch_fetch_size: 100
     defer-datasource-initialization: true
 
-  sql:
-    init:
-      data-locations:
-        - classpath:db/data.sql
-      mode: always
-      encoding: UTF-8
+  profiles:
+    include: oauth
 
 logging:
   level:
     root: info
-    com.example.elevenstreet: debug
-    org.hibernate.SQL: debug
+    com.numble.banking: debug
 
 server:
   servlet:
