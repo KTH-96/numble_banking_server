@@ -19,17 +19,28 @@ repositories {
 }
 
 dependencies {
+	//web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	//web flux 사용시 mac m1에서 생기는 에러같음
+	implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+
+	//database
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	//dev
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//jwt
+	compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5', 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {
