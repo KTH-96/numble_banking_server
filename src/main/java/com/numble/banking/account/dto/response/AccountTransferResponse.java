@@ -8,10 +8,11 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class AccountTransferResponse {
 
+	private final Long memberId;
 	private final Long currentMyMoney;
 	private final String friendAccountNumber;
 
-	public static AccountTransferResponse from(Long money, String number) {
-		return new AccountTransferResponse(money, number);
+	public static AccountTransferResponse from(Long memberId, Long money, String number) {
+		return new AccountTransferResponse(memberId, money, number);
 	}
 }

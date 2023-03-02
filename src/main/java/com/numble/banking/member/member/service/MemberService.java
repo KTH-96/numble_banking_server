@@ -1,16 +1,14 @@
-package com.numble.banking.member.service;
+package com.numble.banking.member.member.service;
 
-import com.numble.banking.member.dto.LoginMember;
-import com.numble.banking.member.dto.request.MemberSignInRequest;
-import com.numble.banking.member.dto.request.MemberSignUpRequest;
-import com.numble.banking.member.dto.response.LogoutMemberResponse;
-import com.numble.banking.member.dto.response.MemberSignUpResponse;
+import com.numble.banking.member.Member;
 
 public interface MemberService {
 
-	MemberSignUpResponse signUp(MemberSignUpRequest signUpMember);
+	boolean isExistingBySnsId(Long kakaoId);
 
-	LoginMember singIn(MemberSignInRequest signInRequest);
+	void createMember(Member member);
 
-	LogoutMemberResponse logout(LoginMember loginMember);
+	Member findBySnsId(Long kakaoId);
+
+	Member findById(Long loginMemberId);
 }

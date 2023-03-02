@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 public class AccountTransferRequest {
 
 	@NotBlank
+	private String MyAccountNumber;
+
+	@NotBlank
 	private String friendAccountNumber;
 
 	@Positive

@@ -1,4 +1,4 @@
-package com.numble.banking.config;
+package com.numble.banking.common.config;
 
 import com.numble.banking.common.utils.LoginMemberArgumentResolver;
 import java.util.List;

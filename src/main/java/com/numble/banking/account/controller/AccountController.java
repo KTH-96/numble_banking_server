@@ -4,8 +4,8 @@ import com.numble.banking.account.dto.request.AccountTransferRequest;
 import com.numble.banking.account.dto.response.AccountResponse;
 import com.numble.banking.account.dto.response.AccountTransferResponse;
 import com.numble.banking.account.service.AccountService;
-import com.numble.banking.member.dto.LoginMember;
-import com.numble.banking.common.utils.Login;
+import com.numble.banking.common.utils.LoginOauth;
+import com.numble.banking.member.oauth.LoginOauthMember;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,17 +26,17 @@ public class AccountController {
 
 	@GetMapping("/my")
 	public Page<AccountResponse> findMyAccounts(
-		@Login @Valid LoginMember loginMember,
+		@LoginOauth @Valid LoginOauthMember loginMember,
 		@PageableDefault(size = 5) Pageable pageable
 	) {
-		return accountService.findMyAccounts(loginMember, pageable);
+		return accountService.findMyAccounts(loginMember.getId(), pageable);
 	}
 
 	@PostMapping("/transfer")
 	private AccountTransferResponse transfer(
-		@Login @Valid LoginMember loginMember,
+		@LoginOauth @Valid LoginOauthMember loginMember,
 		@RequestBody @Valid AccountTransferRequest request
 	) {
-		return accountService.transferMoney(loginMember, request);
+		return accountService.transferMoney(loginMember.getId(), request);
 	}
 }
