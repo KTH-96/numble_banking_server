@@ -30,7 +30,7 @@ public class JwtProvider {
 			createJwtToken(payload, refreshTokenExpiredDate));
 	}
 
-	private String createJwtToken(Long payload, Date date) {
+	public String createJwtToken(Long payload, Date date) {
 		return buildToken(payload, date);
 	}
 
