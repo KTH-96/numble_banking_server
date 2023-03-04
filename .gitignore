@@ -7,6 +7,7 @@ build/
 
 ### Profiles ###
 application-*.yml
+**/test/resources/application.yml
 
 ### STS ###
 .apt_generated
