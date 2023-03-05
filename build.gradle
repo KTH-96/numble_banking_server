@@ -40,6 +40,9 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+	//wire mock
+	testImplementation 'com.github.tomakehurst:wiremock-jre8:2.35.0'
+
 	//test container
 	testImplementation "org.testcontainers:mysql:1.17.6"
 	testImplementation "org.testcontainers:testcontainers:1.17.6"
