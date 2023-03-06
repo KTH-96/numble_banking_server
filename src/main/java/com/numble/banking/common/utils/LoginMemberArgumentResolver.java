@@ -3,7 +3,7 @@ package com.numble.banking.common.utils;
 import static com.numble.banking.exception.ErrorCode.NOT_FIND_MEMBER;
 import static com.numble.banking.exception.ErrorCode.NOT_LOGIN_STATUS;
 
-import com.numble.banking.exception.NotSessionException;
+import com.numble.banking.exception.NotRefreshTokenException;
 import com.numble.banking.member.Member;
 import com.numble.banking.member.member.exception.NotFindMemberException;
 import com.numble.banking.member.member.repository.MemberRepository;
@@ -37,7 +37,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 		NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 		HttpServletRequest request = Optional.ofNullable(webRequest.getNativeRequest(HttpServletRequest.class))
-			.orElseThrow(() -> new NotSessionException(NOT_LOGIN_STATUS));
+			.orElseThrow(() -> new NotRefreshTokenException(NOT_LOGIN_STATUS));
 		//클라이언트와 상의후 결정
 		//애플리케이션 테스트를 위해 쿠키로 바로 사용
 		String refreshToken = request.getCookies()[0].getValue();

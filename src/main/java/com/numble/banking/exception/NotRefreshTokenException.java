@@ -1,8 +1,8 @@
 package com.numble.banking.exception;
 
-public class NotSessionException extends ApplicationException {
+public class NotRefreshTokenException extends ApplicationException {
 
-	public NotSessionException(ErrorCode errorCode) {
+	public NotRefreshTokenException(ErrorCode errorCode) {
 		super(errorCode);
 	}
 }

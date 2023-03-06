@@ -2,7 +2,8 @@ package com.numble.banking.member.oauth.service;
 
 import com.numble.banking.member.Member;
 import com.numble.banking.member.member.service.MemberService;
-import com.numble.banking.member.oauth.client.OauthWebClient;
+import com.numble.banking.member.oauth.client.OauthMemberClient;
+import com.numble.banking.member.oauth.client.OauthTokenClient;
 import com.numble.banking.member.oauth.dto.JwtToken;
 import com.numble.banking.member.oauth.dto.response.KakaoMemberInfo;
 import com.numble.banking.member.oauth.dto.response.OAuthTokenResponse;
@@ -16,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class OAuthService {
 
 	private final KakaoProperties kakaoProperties;
-	private final OauthWebClient oauthWebClient;
+	private final OauthTokenClient oauthTokenClient;
+	private final OauthMemberClient oauthMemberClient;
 	private final MemberService memberService;
 	private final JwtProvider jwtProvider;
 
@@ -43,11 +45,11 @@ public class OAuthService {
 	private KakaoMemberInfo getOauthUserInfo(OAuthTokenResponse tokens) {
 		String authorizationHeader = String.format("%s %s", tokens.getTokenType(),
 			tokens.getAccessToken());
-		return oauthWebClient.getUserInfo(authorizationHeader);
+		return oauthMemberClient.getUserInfo(authorizationHeader);
 	}
 
 	private OAuthTokenResponse getOauthTokens(String code) {
-		return oauthWebClient.getTokens(code,
+		return oauthTokenClient.getTokens(code,
 				kakaoProperties.getGrantType(),
 				kakaoProperties.getClientId(),
 				kakaoProperties.getRedirectUri(),
