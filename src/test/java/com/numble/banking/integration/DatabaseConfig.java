@@ -63,7 +63,7 @@ public class DatabaseConfig implements InitializingBean {
 		this.tableNames = new ArrayList<>();
 
 		ResultSet resultSet = connection.getMetaData()
-			.getTables(null, null, null, new String[]{"TABLE"});
+			.getTables(connection.getCatalog(), null, "%", new String[]{"TABLE"});
 
 		try (resultSet){
 			while (resultSet.next()) {
@@ -129,7 +129,7 @@ public class DatabaseConfig implements InitializingBean {
 	}
 
 	private void initMemberAndAccountData() {
-		Member testMember1 = new Member(1111L, "testMember1",
+		Member testMember1 = new Member(1111L, "멤버1",
 			"https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg",
 			"testMember1@kakao.com");
 		Account account1 = Account.createAccount(AccountNumber.createAccountNumber());
@@ -137,7 +137,7 @@ public class DatabaseConfig implements InitializingBean {
 		this.testMember1 = memberRepository.save(testMember1);
 		this.testAccount1 = accountRepository.save(account1);
 
-		Member testMember2 = new Member(2222L, "testMember1",
+		Member testMember2 = new Member(2222L, "멤버2",
 			"https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg",
 			"testMember2@kakao.com");
 		Account account2 = Account.createAccount(AccountNumber.createAccountNumber());

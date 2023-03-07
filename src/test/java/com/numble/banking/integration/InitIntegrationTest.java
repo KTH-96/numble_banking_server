@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class InitIntegrationTest {
+public abstract class InitIntegrationTest {
 
 	@Autowired
 	protected DatabaseConfig db;
