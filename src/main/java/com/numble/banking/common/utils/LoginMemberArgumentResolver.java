@@ -13,6 +13,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -40,7 +41,7 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 			.orElseThrow(() -> new NotRefreshTokenException(NOT_LOGIN_STATUS));
 		//클라이언트와 상의후 결정
 		//애플리케이션 테스트를 위해 쿠키로 바로 사용
-		String refreshToken = request.getCookies()[0].getValue();
+		String refreshToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 		Long id = jwtProvider.decodeToken(refreshToken);
 
 		Member member = memberRepository.findById(id)
