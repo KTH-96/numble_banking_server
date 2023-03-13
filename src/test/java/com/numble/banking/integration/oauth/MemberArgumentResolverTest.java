@@ -3,6 +3,7 @@ package com.numble.banking.integration.oauth;
 import static org.assertj.core.api.Assertions.*;
 
 import com.numble.banking.common.utils.LoginMemberArgumentResolver;
+import com.numble.banking.exception.NotRefreshTokenException;
 import com.numble.banking.integration.InitIntegrationTest;
 import com.numble.banking.member.oauth.LoginOauthMember;
 import org.assertj.core.api.Assertions;
@@ -36,6 +37,14 @@ public class MemberArgumentResolverTest extends InitIntegrationTest {
 			new ServletWebRequest(mockHttpServletRequest), null);
 
 		assertThat(member.getId()).isEqualTo(db.testMember1.getId());
+	}
+
+	@Test
+	@DisplayName("비로그인 접근할때(리프레쉬 토큰이없을때)")
+	void not_login_member() {
+		assertThatThrownBy(() -> argumentResolver.resolveArgument(null, null,
+			new ServletWebRequest(mockHttpServletRequest), null))
+			.isInstanceOf(NotRefreshTokenException.class);
 	}
 
 }

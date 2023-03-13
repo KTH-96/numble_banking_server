@@ -20,7 +20,8 @@ public enum ErrorCode {
 	NOT_LOGIN_STATUS("M003", HttpStatus.BAD_REQUEST, "로그인이 필요합니다."),
 	INVALID_INPUT_VALUE("R001", HttpStatus.BAD_REQUEST, "요청값이 올바르지 않습니다."),
 
-	FEIGN_CLIENT_EXCEPTION("F001", HttpStatus.BAD_REQUEST, "FEIGN_CLIENT 에러");
+	FEIGN_CLIENT_EXCEPTION("F001", HttpStatus.BAD_REQUEST, "FEIGN_CLIENT 에러"),
+	NOT_WEB_REQUEST_EXCEPTION("F002", HttpStatus.BAD_REQUEST, "WEB_REQUEST 에러");
 
 	private final String code;
 	private final HttpStatus status;
