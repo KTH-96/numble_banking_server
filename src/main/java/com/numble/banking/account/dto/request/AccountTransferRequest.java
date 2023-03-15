@@ -22,4 +22,10 @@ public class AccountTransferRequest {
 
 	@Positive
 	private Long transferMoney;
+
+	public static AccountTransferRequest from(String myAccountNumber,
+		String friendAccountNumber, Long transferMoney) {
+		return new AccountTransferRequest(myAccountNumber,
+			friendAccountNumber, transferMoney);
+	}
 }

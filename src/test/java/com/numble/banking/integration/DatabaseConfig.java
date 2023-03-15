@@ -133,6 +133,7 @@ public class DatabaseConfig implements InitializingBean {
 			"https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg",
 			"testMember1@kakao.com");
 		Account account1 = Account.createAccount(AccountNumber.createAccountNumber());
+		account1.plusMoney(20000L);
 		account1.changeMember(testMember1);
 		this.testMember1 = memberRepository.save(testMember1);
 		this.testAccount1 = accountRepository.save(account1);
@@ -141,6 +142,7 @@ public class DatabaseConfig implements InitializingBean {
 			"https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg",
 			"testMember2@kakao.com");
 		Account account2 = Account.createAccount(AccountNumber.createAccountNumber());
+		account2.plusMoney(20000L);
 		account2.changeMember(testMember2);
 		this.testMember2 = memberRepository.save(testMember2);
 		this.testAccount2 = accountRepository.save(account2);
