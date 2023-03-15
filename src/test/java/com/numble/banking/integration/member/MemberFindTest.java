@@ -51,7 +51,7 @@ public class MemberFindTest extends InitIntegrationTest {
 	@DisplayName("아이디로 맴버 찾기 실패 테스트")
 	void member_find_fail_test() {
 	    //given 준비
-		Long id = 24532L;
+		Long id = Long.MIN_VALUE;
 
 		//then 검증
 		assertThatThrownBy(() -> memberService.findById(id))
@@ -62,7 +62,7 @@ public class MemberFindTest extends InitIntegrationTest {
 	@DisplayName("SNS 아이디로 맴버 찾기 실패 테스트")
 	void member_find_SNS_fail_test() {
 		//given 준비
-		Long id = 24532L;
+		Long id = Long.MIN_VALUE;
 
 		//then 검증
 		assertThatThrownBy(() -> memberService.findBySnsId(id))
