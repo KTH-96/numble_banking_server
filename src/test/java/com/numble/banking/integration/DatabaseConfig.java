@@ -89,8 +89,10 @@ public class DatabaseConfig implements InitializingBean {
 	}
 
 	public void initDb() {
-		initMemberAndAccountData();
+		initMemberData();
+		initAccountData();
 		initFriendData();
+		initBasicData();
 		initMemberAuthorizationData();
 	}
 
@@ -107,44 +109,50 @@ public class DatabaseConfig implements InitializingBean {
 		this.member1ExpiredRefreshToken = jwtProvider.createJwtToken(member1Payload, new Date(now.getTime() - 1000));
 	}
 
+	private void initBasicData() {
+		this.testMember1 = memberRepository.save(testMember1);
+		this.testMember2 = memberRepository.save(testMember2);
+		this.testAccount1 = accountRepository.save(testAccount1);
+		this.testAccount2 = accountRepository.save(testAccount2);
+		this.friends1 = friendRepository.saveAll(friends1);
+		this.friends2 = friendRepository.saveAll(friends2);
+	}
+
 	private void initFriendData() {
-		List<FriendRequest> friendRequests = new ArrayList<>();
+		List<FriendRequest> friendRequests1 = new ArrayList<>();
+		List<FriendRequest> friendRequests2 = new ArrayList<>();
 		FriendRequest friendRequest1 = FriendRequest.builder()
 			.accountNumber(testMember2.findBasicAccountNumber())
 			.name(testMember2.getName())
 			.build();
-		friendRequests.add(friendRequest1);
-
-		this.friends1 = friendRepository.saveAll(Friend.save(friendRequests, testMember1));
-
-		friendRequests.clear();
+		friendRequests1.add(friendRequest1);
+		this.friends1 = Friend.save(friendRequests1, testMember1);
 
 		FriendRequest friendRequest2 = FriendRequest.builder()
 			.accountNumber(testMember1.findBasicAccountNumber())
 			.name(testMember1.getName())
 			.build();
-		friendRequests.add(friendRequest2);
-
-		this.friends2 = friendRepository.saveAll(Friend.save(friendRequests, testMember2));
+		friendRequests2.add(friendRequest2);
+		this.friends2 = Friend.save(friendRequests2, testMember2);
 	}
 
-	private void initMemberAndAccountData() {
-		Member testMember1 = new Member(1111L, "멤버1",
+	private void initAccountData() {
+		this.testAccount1 = Account.createAccount(AccountNumber.createAccountNumber());
+		testAccount1.plusMoney(20000L);
+		testAccount1.changeMember(testMember1);
+
+		this.testAccount2 = Account.createAccount(AccountNumber.createAccountNumber());
+		testAccount2.plusMoney(20000L);
+		testAccount2.changeMember(testMember2);
+	}
+
+	private void initMemberData() {
+		this.testMember1 = new Member(1111L, "멤버1",
 			"https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg",
 			"testMember1@kakao.com");
-		Account account1 = Account.createAccount(AccountNumber.createAccountNumber());
-		account1.plusMoney(20000L);
-		account1.changeMember(testMember1);
-		this.testMember1 = memberRepository.save(testMember1);
-		this.testAccount1 = accountRepository.save(account1);
 
-		Member testMember2 = new Member(2222L, "멤버2",
+		this.testMember2 = new Member(2222L, "멤버2",
 			"https://png.pngtree.com/png-vector/20190411/ourmid/pngtree-vector-business-men-icon-png-image_925963.jpg",
 			"testMember2@kakao.com");
-		Account account2 = Account.createAccount(AccountNumber.createAccountNumber());
-		account2.plusMoney(20000L);
-		account2.changeMember(testMember2);
-		this.testMember2 = memberRepository.save(testMember2);
-		this.testAccount2 = accountRepository.save(account2);
 	}
 }
