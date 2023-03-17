@@ -1,5 +1,6 @@
 package com.numble.banking.friend.dto.request;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -18,4 +19,8 @@ public class FriendListRequest {
 	@Valid
 	@Size(min = 1)
 	private List<FriendRequest> friendRequests;
+
+	public static FriendListRequest from(FriendRequest... friendRequests) {
+		return new FriendListRequest(List.of(friendRequests));
+	}
 }
