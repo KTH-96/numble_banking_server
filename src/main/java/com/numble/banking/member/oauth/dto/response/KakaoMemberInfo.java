@@ -3,11 +3,9 @@ package com.numble.banking.member.oauth.dto.response;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.numble.banking.common.deserializer.KakaoMemberInfoDeserializer;
 import lombok.Getter;
-import lombok.ToString;
 
 @JsonDeserialize(using = KakaoMemberInfoDeserializer.class)
 @Getter
-@ToString
 public class KakaoMemberInfo {
 
 	private Long kakaoId;
