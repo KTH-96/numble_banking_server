@@ -3,6 +3,7 @@ package com.numble.banking.member;
 import static com.numble.banking.common.Constant.BASIC_ACCOUNT;
 
 import com.numble.banking.account.Account;
+import com.numble.banking.common.Timestamped;
 import com.numble.banking.friend.Friend;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(indexes = @Index(columnList = "sns_id, email", name = "sns_id_email_index"))
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends Timestamped {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
