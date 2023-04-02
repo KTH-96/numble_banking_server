@@ -3,7 +3,7 @@ ___
 [뱅킹 서버 노션](https://gilded-spade-880.notion.site/864adf959dd84bc5813df76a721ed5d7)
 
 ## Banking Server API
-![Screenshot 2023-03-29 at 7.07.47 PM.png](..%2F..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fws%2Fhxrbp_sn2054vm0pmtym0b900000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_Bc2e2j%2FScreenshot%202023-03-29%20at%207.07.47%20PM.png)
+<img width="1097" alt="Screenshot 2023-04-02 at 6 12 25 PM" src="https://user-images.githubusercontent.com/75709176/229343606-923aa71c-4642-4d34-9793-c5f190100583.png">
 
 ## **구현하며 고민한 사항**
 
